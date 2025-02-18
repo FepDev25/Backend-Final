@@ -25,6 +25,12 @@ public class VehiculoController {
         return ResponseEntity.ok().body(vehiculos);
     }
 
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<Vehiculo>> getAllVehiculosUser(@PathVariable Long id) {
+        List<Vehiculo> vehiculos = vehiculoService.findByUsuario_Id(id);
+        return ResponseEntity.ok().body(vehiculos);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Vehiculo> getVehiculoById(@PathVariable Long id) {
         return vehiculoService.findById(id)
@@ -32,8 +38,16 @@ public class VehiculoController {
                 .orElseThrow(() -> new ResourceNotFoundException("Vehículo con ID " + id + " no encontrado"));
     }
 
+    @GetMapping("/placa/{placa}")
+    public ResponseEntity<Vehiculo> getVehiculoByPlaca(@PathVariable String placa) {
+        return vehiculoService.findByPlaca(placa)
+                .map(ResponseEntity::ok)
+                .orElseThrow(() -> new ResourceNotFoundException("Vehículo con placa " + placa + " no encontrado"));
+    }
+
     @PostMapping
     public ResponseEntity<Vehiculo> createVehiculo(@RequestBody Vehiculo vehiculo) {
+        vehiculo.setId(null);
         Vehiculo vehiculoSaved = vehiculoService.save(vehiculo);
         return ResponseEntity.ok().body(vehiculoSaved);
     }

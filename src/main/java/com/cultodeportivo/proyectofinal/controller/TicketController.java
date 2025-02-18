@@ -39,6 +39,7 @@ public class TicketController {
 
     @PostMapping
     public ResponseEntity<Ticket> createTicket(@RequestBody Ticket ticket) {
+        ticket.setId(null);
         Ticket ticketCreated = ticketService.save(ticket);
         return ResponseEntity.ok().body(ticketCreated);
     }
@@ -76,6 +77,7 @@ public class TicketController {
 
     @PostMapping("/clientes-ocasionales")
     public ResponseEntity<ClienteOcasional> createClientesOcasional(@RequestBody ClienteOcasional clienteOcasional) {
+        clienteOcasional.setId(null);
         ClienteOcasional newClienteOcasional = clienteOcasionalService.save(clienteOcasional);
         return ResponseEntity.ok().body(newClienteOcasional);
     }

@@ -88,6 +88,7 @@ public class HorarioController {
 
     @PostMapping("/exception-horarios")
     public ResponseEntity<ExceptionHorario> saveExceptionHorario(@RequestBody ExceptionHorario exceptionHorario) {
+        exceptionHorario.setId(null);
         ExceptionHorario exceptionHorarioCreated = exceptionHorarioService.save(exceptionHorario);
         return ResponseEntity.ok().body(exceptionHorarioCreated);
     }

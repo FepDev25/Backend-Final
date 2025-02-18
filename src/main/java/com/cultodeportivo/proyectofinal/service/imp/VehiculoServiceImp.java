@@ -70,6 +70,16 @@ public class VehiculoServiceImp implements VehiculoService {
         vehiculoRepository.deleteById(id);
     }
 
+    @Override
+    public List<Vehiculo> findByUsuario_Id(Long id) {
+        return vehiculoRepository.findByUsuario_Id(id);
+    }
+
+    @Override
+    public Optional<Vehiculo> findByPlaca(String placa) {
+        return vehiculoRepository.findByPlaca(placa);
+    }
+
     private void validarPlaca(String placa) {
         if (placa == null || !PATRON_PLACA.matcher(placa).matches()) {
             throw new PlacaInvalidaException("Formato de placa inválido. Debe ser ABC-1234 o ABC123.");

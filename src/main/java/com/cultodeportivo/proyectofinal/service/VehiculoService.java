@@ -11,4 +11,6 @@ public interface VehiculoService {
     Vehiculo save(Vehiculo vehiculo);
     Optional<Vehiculo> update(Vehiculo vehiculo);
     void deleteById(Long id);
+    List<Vehiculo> findByUsuario_Id(Long id);
+    Optional<Vehiculo> findByPlaca(String placa);
 }
