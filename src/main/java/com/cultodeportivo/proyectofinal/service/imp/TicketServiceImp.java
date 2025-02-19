@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TicketServiceImp implements TicketService {
@@ -70,6 +72,11 @@ public class TicketServiceImp implements TicketService {
             throw new TicketNoEncontradoException("No se puede eliminar: Ticket con ID " + id + " no encontrado");
         }
         ticketRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Ticket> findByFechaEmision(LocalDate fechaEmision) {
+        return ticketRepository.findAll().stream().filter(ticket -> ticket.getFechaEmision().isEqual(fechaEmision) || ticket.getFechaEmision().isAfter(fechaEmision)).collect(Collectors.toList());
     }
 
     public BigDecimal calcularMonto(Long id, Tarifa tarifa) {

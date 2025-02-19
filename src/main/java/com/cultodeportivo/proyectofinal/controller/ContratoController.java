@@ -6,6 +6,7 @@ import com.cultodeportivo.proyectofinal.service.ContratoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -22,6 +23,13 @@ public class ContratoController {
     @GetMapping
     public ResponseEntity<List<Contrato>> getAllContratos() {
         List<Contrato> contratos = contratoService.findAll();
+        return ResponseEntity.ok(contratos);
+    }
+
+    @GetMapping("/fecha/{fecha}")
+    public ResponseEntity<List<Contrato>> getAllContratosByFecha(@PathVariable String fecha) {
+        LocalDate fechaInicio = LocalDate.parse(fecha);
+        List<Contrato> contratos = contratoService.findByFechaInicio(fechaInicio);
         return ResponseEntity.ok(contratos);
     }
 

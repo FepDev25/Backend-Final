@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ContratoServiceImp implements ContratoService {
@@ -25,6 +26,7 @@ public class ContratoServiceImp implements ContratoService {
     public List<Contrato> findAll() {
         return contratoRepository.findAll();
     }
+
 
     @Override
     public Optional<Contrato> findById(Long id) {
@@ -63,6 +65,11 @@ public class ContratoServiceImp implements ContratoService {
             throw new ContratoInexistenteException("No se puede eliminar: Contrato con ID " + id + " no encontrado");
         }
         contratoRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Contrato> findByFechaInicio(LocalDate fechaInicio) {
+        return contratoRepository.findAll().stream().filter(contrato -> contrato.getFechaInicio().isEqual(fechaInicio) || contrato.getFechaInicio().isAfter(fechaInicio)).collect(Collectors.toList());
     }
 
     private void validarContrato(Contrato contrato) {

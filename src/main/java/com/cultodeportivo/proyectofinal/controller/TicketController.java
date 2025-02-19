@@ -9,6 +9,7 @@ import com.cultodeportivo.proyectofinal.service.TicketService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -27,6 +28,13 @@ public class TicketController {
     @GetMapping
     public ResponseEntity<List<Ticket>> getAllTickets() {
         List<Ticket> tickets = ticketService.findAll();
+        return ResponseEntity.ok().body(tickets);
+    }
+
+    @GetMapping("/fecha/{localDate}")
+    public ResponseEntity<List<Ticket>> getTicketsDate(@PathVariable String localDate) {
+        LocalDate date = LocalDate.parse(localDate);
+        List<Ticket> tickets = ticketService.findByFechaEmision(date);
         return ResponseEntity.ok().body(tickets);
     }
 
