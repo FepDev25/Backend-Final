@@ -81,6 +81,11 @@ public class UsuarioServiceImp implements UsuarioService {
         return usuarioRepository.findByPersona_Correo(personaCorreo);
     }
 
+    @Override
+    public Optional<Usuario> findByPersona_Cedula(String cedula) {
+        return usuarioRepository.findByPersona_Cedula(cedula);
+    }
+
     private void validarDatosUsuario(Usuario usuario) {
         if (usuario.getPersona() == null ||
                 usuario.getPersona().getNombre() == null || usuario.getPersona().getNombre().isBlank() ||

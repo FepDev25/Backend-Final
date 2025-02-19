@@ -1,7 +1,6 @@
 package com.cultodeportivo.proyectofinal.service.imp;
 
 import com.cultodeportivo.proyectofinal.exception.exceptions.ContratoFechasInvalidasException;
-import com.cultodeportivo.proyectofinal.exception.exceptions.ContratoDuplicadoException;
 import com.cultodeportivo.proyectofinal.exception.exceptions.ContratoInexistenteException;
 import com.cultodeportivo.proyectofinal.model.Contrato;
 import com.cultodeportivo.proyectofinal.repository.ContratoRepository;
@@ -75,18 +74,18 @@ public class ContratoServiceImp implements ContratoService {
                 );
             }
         }
-        if (contrato.getUsuario() != null && contrato.getEspacio() != null) {
-            LocalDate hoy = LocalDate.now();
-            boolean existeContratoActivo = contratoRepository.existsByUsuarioIdAndEspacioIdAndFechaFinAfter(
-                    contrato.getUsuario().getId(),
-                    contrato.getEspacio().getId(),
-                    hoy
-            );
-            if (existeContratoActivo) {
-                throw new ContratoDuplicadoException(
-                        "Ya existe un contrato activo para este usuario y este espacio."
-                );
-            }
-        }
+//        if (contrato.getUsuario() != null && contrato.getEspacio() != null) {
+//            LocalDate hoy = LocalDate.now();
+//            boolean existeContratoActivo = contratoRepository.existsByUsuarioIdAndEspacioIdAndFechaFinAfter(
+//                    contrato.getUsuario().getId(),
+//                    contrato.getEspacio().getId(),
+//                    hoy
+//            );
+//            if (existeContratoActivo) {
+//                throw new ContratoDuplicadoException(
+//                        "Ya existe un contrato activo para este usuario y este espacio."
+//                );
+//            }
+//        }
     }
 }

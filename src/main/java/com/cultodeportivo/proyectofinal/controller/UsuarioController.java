@@ -39,6 +39,13 @@ public class UsuarioController {
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario con correo " + correo + " no encontrado"));
     }
 
+    @GetMapping("/cedula/{cedula}")
+    public ResponseEntity<Usuario> findByCedula(@PathVariable String cedula) {
+        return usuarioService.findByPersona_Cedula(cedula)
+                .map(ResponseEntity::ok)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario con cedula " + cedula + " no encontrado"));
+    }
+
     @PostMapping
     public ResponseEntity<Usuario> save(@RequestBody Usuario usuario) {
         Usuario usuarioSaved = usuarioService.save(usuario);

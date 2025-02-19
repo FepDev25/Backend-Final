@@ -12,4 +12,5 @@ public interface UsuarioService {
     Optional<Usuario> update(Usuario usuario);
     void deleteById(Long id);
     Optional<Usuario> findByPersona_Correo(String personaCorreo);
+    Optional<Usuario> findByPersona_Cedula(String cedula);
 }
