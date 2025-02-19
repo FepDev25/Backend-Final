@@ -4,9 +4,12 @@ import com.cultodeportivo.proyectofinal.exception.exceptions.ResourceNotFoundExc
 import com.cultodeportivo.proyectofinal.model.ExceptionHorario;
 import com.cultodeportivo.proyectofinal.model.Horario;
 import com.cultodeportivo.proyectofinal.model.TipoHorario;
+import com.cultodeportivo.proyectofinal.model.Usuario;
 import com.cultodeportivo.proyectofinal.service.ExceptionHorarioService;
 import com.cultodeportivo.proyectofinal.service.HorarioService;
 import com.cultodeportivo.proyectofinal.service.TipoHorarioService;
+import com.cultodeportivo.proyectofinal.service.UsuarioService;
+import com.cultodeportivo.proyectofinal.service.imp.EmailService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,11 +23,15 @@ public class HorarioController {
     private final HorarioService horarioService;
     private final TipoHorarioService tipoHorarioService;
     private final ExceptionHorarioService exceptionHorarioService;
+    private final UsuarioService usuariosService;
+    private final EmailService emailService;
 
-    public HorarioController(HorarioService horarioService, TipoHorarioService tipoHorarioService, ExceptionHorarioService exceptionHorarioService) {
+    public HorarioController(HorarioService horarioService, TipoHorarioService tipoHorarioService, ExceptionHorarioService exceptionHorarioService, UsuarioService usuarioService, EmailService emailService) {
         this.horarioService = horarioService;
         this.tipoHorarioService = tipoHorarioService;
         this.exceptionHorarioService = exceptionHorarioService;
+        this.usuariosService = usuarioService;
+        this.emailService = emailService;
     }
 
     // 🟢 Métodos para acceder a los tipos de horarios
@@ -87,10 +94,19 @@ public class HorarioController {
     }
 
     @PostMapping("/exception-horarios")
-    public ResponseEntity<ExceptionHorario> saveExceptionHorario(@RequestBody ExceptionHorario exceptionHorario) {
-        exceptionHorario.setId(null);
-        ExceptionHorario exceptionHorarioCreated = exceptionHorarioService.save(exceptionHorario);
-        return ResponseEntity.ok().body(exceptionHorarioCreated);
+    public ResponseEntity<ExceptionHorario> agregarExcepcion(@RequestBody ExceptionHorario excepcion) {
+        excepcion.setId(null);
+        ExceptionHorario nuevaExcepcion = exceptionHorarioService.save(excepcion);
+
+        // 🔹 Obtener todos los usuarios y enviar correo de notificación
+//        List<Usuario> usuarios = usuariosService.findAll();
+//        for (Usuario usuario : usuarios) {
+//            emailService.enviarCorreo(usuario.getPersona().getCorreo(),
+//                    "Nueva Excepción de Horario",
+//                    "Se ha agrega do una nueva excepción de horario para el día " + excepcion.getFecha());
+//        }
+
+        return ResponseEntity.ok(nuevaExcepcion);
     }
 
     @PutMapping("/exception-horarios")

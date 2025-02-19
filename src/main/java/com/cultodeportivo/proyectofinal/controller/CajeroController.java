@@ -3,6 +3,7 @@ package com.cultodeportivo.proyectofinal.controller;
 import com.cultodeportivo.proyectofinal.model.Cajero;
 import com.cultodeportivo.proyectofinal.service.CajeroService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -48,5 +49,18 @@ public class CajeroController {
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         cajeroService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/guardar")
+    public String guardarCajero(@ModelAttribute Cajero cajero, Model model) {
+        try {
+            cajeroService.save(cajero); // Guarda el cajero en la base de datos
+            model.addAttribute("mensaje", "Cajero registrado exitosamente");
+            model.addAttribute("exito", true);
+        } catch (Exception e) {
+            model.addAttribute("mensaje", "Error al registrar el cajero");
+            model.addAttribute("exito", false);
+        }
+        return "insertar-cajero";
     }
 }
