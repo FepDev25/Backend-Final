@@ -40,6 +40,7 @@ public class SpringSecurityConfig {
                 .authorizeHttpRequests(authz -> authz
                         // Permitir acceso sin autenticación solo a login y registro
                         .requestMatchers("/api/auth/register", "/api/auth/login").permitAll()
+                        .requestMatchers("/css/**", "/js/**", "/images/**", "/favicon.ico", "/webjars/**").permitAll()
 
                         // Acceso a rutas por roles
                         .requestMatchers("/api/usuarios/**").permitAll()
@@ -54,6 +55,9 @@ public class SpringSecurityConfig {
                         .requestMatchers("/api/personas/**").permitAll()
                         .requestMatchers("/api/roles/**").permitAll()
                         .requestMatchers("/api/vehiculos/**").permitAll()
+                        .requestMatchers("/cajeros/**").permitAll()
+                        .requestMatchers("/usuarios/**").permitAll()
+                        .requestMatchers("/vehiculos/**").permitAll()
 
 
                         // Acceso protegido para otras rutas

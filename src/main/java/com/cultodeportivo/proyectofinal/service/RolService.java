@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface RolService {
     Optional<Rol> findById(Long id);
     List<Rol> findAll();
+    Optional<Rol> findByNombre(String nombre);
 }

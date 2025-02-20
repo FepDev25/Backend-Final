@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro de Cajero</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px; /* Espacio entre secciones */
+        }
+        .table-container {
+            width: 100%;
+            max-width: 800px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        .message {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .success {
+            color: green;
+        }
+        .error {
+            color: red;
+        }
+        fieldset {
+            border: none;
+            padding: 0;
+            margin-bottom: 15px;
+        }
+        legend {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #555;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.1em;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #28a745;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="container">
+    <h2>Registro de Nuevo Cajero</h2>
+
+    <div th:if="${mensaje}" class="message success">
+        <p th:text="${mensaje}"></p>
+    </div>
+
+    <div th:if="${error}" class="message error">
+        <p th:text="${error}"></p>
+    </div>
+
+    <form th:action="@{/cajeros/registro}" th:object="${cajero}" method="post">
+        <fieldset>
+            <legend>Datos Personales</legend>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" th:field="*{persona.nombre}" required />
+
+            <label for="apellido">Apellido:</label>
+            <input type="text" id="apellido" th:field="*{persona.apellido}" required />
+
+            <label for="cedula">Cédula:</label>
+            <input type="text" id="cedula" th:field="*{persona.cedula}" required />
+
+            <label for="correo">Correo:</label>
+            <input type="email" id="correo" th:field="*{persona.correo}" required />
+
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" th:field="*{persona.password}" required />
+
+            <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+            <input type="date" id="fechaNacimiento" th:field="*{persona.fechaNacimiento}" required />
+
+            <label for="telefono">Teléfono:</label>
+            <input type="text" id="telefono" th:field="*{persona.telefono}" />
+
+            <label for="direccion">Dirección:</label>
+            <input type="text" id="direccion" th:field="*{persona.direccion}" />
+
+            <label for="genero">Género:</label>
+            <select id="genero" th:field="*{persona.genero}" required>
+                <option value="M">Masculino</option>
+                <option value="F">Femenino</option>
+                <option value="O">Otro</option>
+            </select>
+        </fieldset>
+
+        <fieldset>
+            <legend>Datos del Cajero</legend>
+            <label for="sueldo">Sueldo:</label>
+            <input type="number" id="sueldo" th:field="*{sueldo}" required />
+        </fieldset>
+
+        <button type="submit">Registrar Cajero</button>
+    </form>
+</div>
+
+<div class="table-container">
+    <h2>Lista de Cajeros Registrados</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Cédula</th>
+            <th>Correo</th>
+            <th>Teléfono</th>
+            <th>Sueldo</th>
+            <th>Fecha de Ingreso</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="cajero : ${cajeros}">
+            <td th:text="${cajero.persona.nombre} + ' ' + ${cajero.persona.apellido}"></td>
+            <td th:text="${cajero.persona.cedula}"></td>
+            <td th:text="${cajero.persona.correo}"></td>
+            <td th:text="${cajero.persona.telefono}"></td>
+            <td th:text="${cajero.sueldo}"></td>
+            <td th:text="${cajero.fechaIngreso}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+
+</html>

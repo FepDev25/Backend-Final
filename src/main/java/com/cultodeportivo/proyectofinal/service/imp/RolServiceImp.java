@@ -27,4 +27,10 @@ public class RolServiceImp implements RolService {
     public List<Rol> findAll() {
         return rolRepository.findAll();
     }
+
+    @Override
+    public Optional<Rol> findByNombre(String nombre) {
+        Rol rol = rolRepository.findByNombre(nombre).orElse(null);
+        return Optional.ofNullable(rol);
+    }
 }

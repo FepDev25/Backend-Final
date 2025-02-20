@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro de Vehículo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+        }
+        .table-container {
+            width: 100%;
+            max-width: 800px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        .message {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .success {
+            color: green;
+        }
+        .error {
+            color: red;
+        }
+        fieldset {
+            border: none;
+            padding: 0;
+            margin-bottom: 15px;
+        }
+        legend {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #555;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.1em;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .user-section {
+            margin-top: 20px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .user-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Registro de Nuevo Vehículo</h2>
+
+    <div th:if="${mensaje}" class="message success">
+        <p th:text="${mensaje}"></p>
+    </div>
+
+    <div th:if="${error}" class="message error">
+        <p th:text="${error}"></p>
+    </div>
+
+    <form th:action="@{/vehiculos/registro}" method="post">
+        <fieldset>
+            <legend>Datos del Vehículo</legend>
+            <label for="cedula">Cédula del Usuario:</label>
+            <input type="text" id="cedula" name="cedula" required />
+
+            <label for="placa">Placa del Vehículo:</label>
+            <input type="text" id="placa" name="placa" required />
+        </fieldset>
+
+        <button type="submit">Registrar Vehículo</button>
+    </form>
+</div>
+
+<div class="table-container">
+    <h2>Lista de Vehículos Registrados</h2>
+
+    <div th:each="entry : ${usuarioVehiculos}">
+        <div class="user-section">
+            <p class="user-name" th:text="${entry.key.persona.nombre} + ' ' + ${entry.key.persona.apellido}"></p>
+            <p><strong>Cédula:</strong> <span th:text="${entry.key.persona.cedula}"></span></p>
+        </div>
+        <table>
+            <thead>
+            <tr>
+                <th>Placa</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="vehiculo : ${entry.value}">
+                <td th:text="${vehiculo.placa}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
