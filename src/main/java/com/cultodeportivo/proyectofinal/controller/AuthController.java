@@ -26,7 +26,7 @@ import static com.cultodeportivo.proyectofinal.security.TokenJwtConfig.SECRET_KE
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200", "https://parqueadero-public.web.app"})
 public class AuthController {
 
     private final PersonaService personaService;
